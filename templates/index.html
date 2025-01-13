@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
+    <title>Spotify Search</title>
+</head>
+<body>
+    <div class="content">
+        <h1>Spotify Search</h1>
+
+        <!--
+        <form action="/" method="POST">
+            <input type="text" name="content" id="content" placeholder="Search Spotify" required>
+            <input type="submit" value="Search">
+        </form>
+        -->
+        <!-- Search Form -->
+        <form action="/" method = "POST">
+            <span class="search-icon material-symbols-outlined">search</span>
+            <input class="search-input" type="search" name="content" id="content" placeholder="What are you looking for?">
+        </form>
+
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        <!-- Results Section -->
+        <div class="results">
+            <!-- Artists -->
+            {% if artists %}
+            <h2>Artists</h2>
+            <div class="results-grid">
+                {% for artist in artists %}
+                <div class="result">
+                    <img src="{{ artist.image or 'https://via.placeholder.com/100' }}" alt="{{ artist.name }}" class="artist-image">
+                    <p class="title">{{ artist.name }}</p>
+                    <p class="subtext">Artist</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Albums -->
+            {% if albums %}
+            <h2>Albums</h2>
+            <div class="results-grid">
+                {% for album in albums %}
+                <div class="result">
+                    <img src="{{ album.image }}" alt="{{ album.name }}">
+                    <p class="title">{{ album.name }}</p>
+                    <p class="subtext">{{ album.year }} • {{ album.artist }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Tracks -->
+            {% if tracks %}
+            <h2>Tracks</h2>
+            <div class="results-grid">
+                {% for track in tracks %}
+                <div class="result">
+                    <img src="{{ track.image }}" alt="{{ track.name }}">
+                    <p class="title">{{ track.name }}</p>
+                    <p class="subtext">from {{ track.album }}</p>
+                    <p class="subtext">by {{ track.artist }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+</div>
+</body>
+</html>
